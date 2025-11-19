@@ -7,14 +7,13 @@ import json
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import (
-    classification_report,
-    confusion_matrix,
-    roc_auc_score,
-    precision_recall_curve,
-    roc_curve,
-    ConfusionMatrixDisplay,
-)
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, roc_curve, auc
+import sys
+
+# Add the project root to the Python path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, project_root)
 
 
 def evaluate_and_save(y_true, y_pred, y_proba, out_dir: str = "models/evaluation") -> Dict:
@@ -65,3 +64,38 @@ def evaluate_and_save(y_true, y_pred, y_proba, out_dir: str = "models/evaluation
         json.dump(metrics, f, indent=2)
 
     return metrics
+
+def plot_confusion_matrix(y_true, y_pred, classes, title='Confusion Matrix', cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    """
+    cm = confusion_matrix(y_true, y_pred)
+    fig, ax = plt.subplots()
+    sns.heatmap(cm, annot=True, fmt='d', cmap=cmap, ax=ax, cbar=False)
+
+    ax.set_xlabel('Predicted labels')
+    ax.set_ylabel('True labels')
+    ax.set_title(title)
+    ax.xaxis.set_ticklabels(classes)
+    ax.yaxis.set_ticklabels(classes)
+    plt.tight_layout()
+    return fig
+
+def plot_roc_curve(y_true, y_pred_proba, title='Receiver Operating Characteristic'):
+    """
+    This function plots the ROC curve.
+    """
+    fpr, tpr, _ = roc_curve(y_true, y_pred_proba)
+    roc_auc = auc(fpr, tpr)
+
+    fig, ax = plt.subplots()
+    ax.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (area = {roc_auc:0.2f})')
+    ax.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    ax.set_xlim([0.0, 1.0])
+    ax.set_ylim([0.0, 1.05])
+    ax.set_xlabel('False Positive Rate')
+    ax.set_ylabel('True Positive Rate')
+    ax.set_title(title)
+    ax.legend(loc="lower right")
+    plt.tight_layout()
+    return fig
