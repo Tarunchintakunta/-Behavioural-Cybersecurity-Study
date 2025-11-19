@@ -1,0 +1,75 @@
+{
+    "source_file": "data/processed/model_training_data.csv",
+    "num_participants": 189,
+    "research_question_1": {
+        "analysis_type": "Pearson Correlation",
+        "description": "Correlation between cognitive bias score and the final vulnerability score.",
+        "correlation_matrix": {
+            "cognitive_bias_score": {
+                "cognitive_bias_score": 1.0,
+                "vulnerability_score": -0.16145300162123213
+            },
+            "vulnerability_score": {
+                "cognitive_bias_score": -0.16145300162123213,
+                "vulnerability_score": 1.0
+            }
+        },
+        "interpretation": "The correlation between cognitive bias and vulnerability is -0.161."
+    },
+    "research_question_2": {
+        "analysis_type": "Pearson Correlation",
+        "description": "Correlation between stress/multitasking scores and the final vulnerability score.",
+        "correlation_matrix": {
+            "stress_level_score": {
+                "stress_level_score": 1.0,
+                "multitasking_habits_score": -0.2566911764399968,
+                "vulnerability_score": 0.6317671268888446
+            },
+            "multitasking_habits_score": {
+                "stress_level_score": -0.2566911764399968,
+                "multitasking_habits_score": 1.0,
+                "vulnerability_score": -0.03604873154458889
+            },
+            "vulnerability_score": {
+                "stress_level_score": 0.6317671268888446,
+                "multitasking_habits_score": -0.03604873154458889,
+                "vulnerability_score": 1.0
+            }
+        },
+        "interpretation": "Stress correlation: 0.632. Multitasking correlation: -0.036."
+    },
+    "research_question_3": {
+        "analysis_type": "Independent Samples T-test",
+        "description": "Comparing vulnerability scores between participants with and without prior training.",
+        "t_statistic": -1.226469700478802,
+        "p_value": 0.22156404520589176,
+        "mean_vulnerability_trained": 0.41885964912280693,
+        "mean_vulnerability_untrained": 0.47368421052631593,
+        "interpretation": "The difference is not statistically significant (p=0.2216)."
+    },
+    "research_question_4": {
+        "analysis_type": "ANOVA",
+        "description": "Comparing mean vulnerability scores across different job roles.",
+        "anova_results": [
+            {
+                "Source": "D_JOB_ROLE",
+                "SS": 15.024337158686192,
+                "DF": 17,
+                "MS": 0.8837845387462466,
+                "F": 62.709084323384545,
+                "p-unc": 3.4918586551630146e-64,
+                "np2": 0.8617684110176705
+            },
+            {
+                "Source": "Within",
+                "SS": 2.409972299168975,
+                "DF": 171,
+                "MS": 0.0140934052582981,
+                "F": NaN,
+                "p-unc": NaN,
+                "np2": NaN
+            }
+        ],
+        "interpretation": "ANOVA test for job role significance resulted in p-value of 0.0000."
+    }
+}
