@@ -1,0 +1,49 @@
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Research Design}
+This study employs a quantitative research design to establish correlations between behavioral factors and phishing vulnerability. The research was conducted in two distinct phases:
+\begin{enumerate}
+    \item \textbf{Phase 1: Behavioral Survey}: Participants completed a detailed questionnaire designed to assess their demographics, digital literacy, stress levels, and susceptibility to cognitive biases.
+    \item \textbf{Phase 2: Simulated Phishing Experiment}: A subset of participants were subjected to a controlled phishing simulation to measure their actual behavioral response (clicking a link vs. ignoring/reporting).
+\end{enumerate}
+
+\subsection{Data Collection Instrument}
+The primary data collection instrument was a structured survey consisting of 20 questions, categorized as follows:
+
+\subsubsection{Demographics}
+\begin{itemize}
+    \item \textbf{Age Group}: (e.g., 18-24, 25-34, etc.)
+    \item \textbf{Experience}: Years of professional experience.
+    \item \textbf{Job Role}: (e.g., Technical, Management, Administrative).
+\end{itemize}
+
+\subsubsection{Behavioral & Psychological Factors}
+The survey utilized a 5-point Likert scale (1=Strongly Disagree, 5=Strongly Agree) to measure specific constructs:
+\begin{itemize}
+    \item \textbf{Authority Bias}: Measured by agreement with statements like "I tend to follow requests from managers without questioning them."
+    \item \textbf{Stress Levels}: Assessed via questions such as "I often feel overwhelmed by my workload."
+    \item \textbf{Multitasking}: "I frequently switch between tasks while checking emails."
+    \item \textbf{Digital Literacy}: Self-assessment of technical skills and confidence in identifying online threats.
+    \item \textbf{Security Awareness}: Frequency and recency of cybersecurity training.
+\end{itemize}
+
+\subsection{Vulnerability Scoring Algorithm}
+To quantify "phishing vulnerability" for the purpose of analysis, a composite score was calculated for each participant. The \textit{Vulnerability Score} ($V$) is defined as a weighted linear combination of the normalized survey responses:
+
+\begin{equation}
+    V = \alpha \cdot S_{bias} + \beta \cdot S_{stress} + \gamma \cdot S_{multi} - \delta \cdot S_{literacy} - \epsilon \cdot S_{training}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $S_{bias}$, $S_{stress}$, $S_{multi}$ are the normalized scores for Authority Bias, Stress, and Multitasking (risk factors).
+    \item $S_{literacy}$, $S_{training}$ are the normalized scores for Digital Literacy and Training (protective factors).
+    \item $\alpha, \beta, \gamma, \delta, \epsilon$ are weights determined by the correlation coefficients observed in the pilot study.
+\end{itemize}
+
+\subsection{Synthetic Data Generation}
+To overcome the limitations of a small sample size (N=21) from the initial survey, a synthetic dataset was generated to simulate a larger population (N=2700). This generation process used the statistical distributions (mean and standard deviation) observed in the real data to create realistic "virtual participants." This allowed for more robust training of machine learning models, ensuring that the classifiers could learn complex non-linear relationships without overfitting to the small pilot dataset.
+
+\subsection{Ethical Considerations}
+Ethical approval was obtained from the National College of Ireland's Ethics Committee. All participants provided informed consent. The phishing simulation was conducted in a "sandbox" environment where no actual malicious code was executed, and no sensitive personal data (PII) was collected beyond the necessary demographic categories. Participants were debriefed immediately after the experiment.

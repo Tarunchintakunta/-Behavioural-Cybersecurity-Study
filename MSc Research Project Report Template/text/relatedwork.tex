@@ -1,0 +1,24 @@
+\section{Related Work}
+\label{sec:lit_review}
+
+\subsection{The Psychology of Phishing}
+Phishing is fundamentally a psychological attack that exploits heuristics—mental shortcuts used for decision-making. \cite{Kahneman2011} distinguishes between "System 1" (fast, intuitive, emotional) and "System 2" (slow, deliberative, logical) thinking. Phishing attacks are designed to trigger System 1 processing, causing users to bypass the critical analysis of System 2.
+
+\cite{Vishwanath2011} proposed the "Integrated Information Processing Model of Phishing Susceptibility," which suggests that users with high "habit strength" (habitual email checking) and low "self-efficacy" are more likely to process emails heuristically. When individuals rely on visual cues—such as a familiar logo or a professional layout—rather than analyzing the header information, they are significantly more vulnerable to deception \citep{Dhamija2006}.
+
+\subsection{Cognitive Biases in Cybersecurity}
+Cognitive biases play a pivotal role in security decision-making.
+\begin{itemize}
+    \item \textbf{Authority Bias}: Individuals tend to comply with requests from perceived figures of authority. Attackers exploit this in Business Email Compromise (BEC) by impersonating CEOs or IT administrators. \cite{Parsons2019} found that social engineering attacks leveraging authority were among the most successful.
+    \item \textbf{Urgency and Scarcity}: The "Urgency Bias" forces users to act quickly to avoid a negative outcome (e.g., "Your account will be locked in 24 hours"). This time pressure suppresses critical thinking and forces a System 1 response.
+    \item \textbf{Optimism Bias}: Users often believe they are less likely to be targeted than others ("It won't happen to me"), leading to lax security behaviors \citep{Sheng2010}.
+\end{itemize}
+
+\subsection{Stress and Multitasking}
+The modern workplace environment often exacerbates vulnerability. High cognitive load, induced by stress or multitasking, depletes the mental resources required for vigilance. \cite{Jones2020} utilized the Job Demands-Resources (JD-R) model to show a strong correlation between workplace stress and reduced compliance with security policies. When users are multitasking, their ability to detect subtle anomalies—such as a slightly misspelled URL or an unexpected attachment—is severely compromised. This "attention economy" perspective suggests that security is often a secondary task that gets neglected under pressure \citep{Alsharnouby2015}.
+
+\subsection{Limitations of Current Training}
+While security awareness training is a standard compliance requirement, its effectiveness is debated. Traditional training is often infrequent, generic, and passive. \cite{Lastdrager2014} argues that "embedded training," where users are presented with teachable moments immediately after falling for a simulated phish, is far more effective than classroom-style learning. \cite{Caputo2014} supported this, finding that immediate feedback loops significantly improved retention. However, even these interventions rarely account for the user's behavioral profile, treating all employees as equally vulnerable, which is an inefficient allocation of defense resources.
+
+\subsection{Machine Learning in Phishing Detection}
+Most existing research focuses on technical detection—using NLP to analyze email content or analyzing URL structures. However, there is a growing body of work focusing on \textit{user-centric} prediction. Recent studies have begun to use demographic and behavioral data to predict susceptibility, but few have integrated real-time stress and cognitive bias markers into a unified predictive model, which is the gap this study aims to fill.

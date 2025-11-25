@@ -1,0 +1,38 @@
+\section{Implementation}
+\label{sec:implementation}
+
+\subsection{Technology Stack}
+The project was implemented using Python 3.9, leveraging a robust ecosystem of data science libraries:
+\begin{itemize}
+    \item \textbf{Pandas}: For efficient data manipulation, cleaning, and merging of survey and experiment datasets.
+    \item \textbf{Scikit-learn}: For implementing machine learning algorithms, pipeline construction, and model evaluation.
+    \item \textbf{Streamlit}: For building the interactive web-based dashboard that allows users to visualize data and test the model.
+    \item \textbf{MLflow}: For tracking experiments, logging hyperparameters, and versioning trained models.
+    \item \textbf{Statsmodels}: For conducting rigorous statistical hypothesis testing (ANOVA, t-tests).
+\end{itemize}
+
+\subsection{Code Structure}
+The codebase is organized into modular components to ensure maintainability and separation of concerns:
+\begin{itemize}
+    \item \texttt{src/processing/}: Contains scripts for data cleaning and feature engineering. The \texttt{preprocess\_for\_modeling.py} script handles the complex logic of merging survey responses with experiment logs based on Participant IDs.
+    \item \texttt{src/analysis/}: Includes \texttt{statistical\_analysis.py}, which performs hypothesis testing and generates a JSON report of findings.
+    \item \texttt{src/models/}: Houses the training pipeline (\texttt{train\_vulnerability\_predictor.py}). This script handles data splitting, SMOTE (Synthetic Minority Over-sampling Technique) for class imbalance, and model serialization.
+    \item \texttt{src/visualization/}: Contains the Streamlit dashboard code (\texttt{dashboard.py}), which dynamically loads the latest trained model for inference.
+\end{itemize}
+
+\subsection{Key Algorithms}
+\subsubsection{Vulnerability Scoring}
+A custom algorithm was developed to calculate a composite "Vulnerability Score" for each participant. This score is a weighted average of normalized sub-scores:
+\begin{equation}
+    V = w_1 \cdot S_{bias} + w_2 \cdot S_{stress} + w_3 \cdot S_{multi} - w_4 \cdot S_{literacy} - w_5 \cdot S_{training}
+\end{equation}
+Where weights ($w$) were determined based on the correlation coefficients found in the preliminary analysis.
+
+\subsubsection{Model Training Pipeline}
+The training pipeline utilizes \texttt{GridSearchCV} for hyperparameter tuning. It employs a 5-fold cross-validation strategy to ensure the model generalizes well to unseen data. The pipeline automatically handles:
+\begin{enumerate}
+    \item \textbf{Imputation}: Filling missing values.
+    \item \textbf{Scaling}: Standardizing features to zero mean and unit variance.
+    \item \textbf{Selection}: Choosing the top $k$ features based on mutual information.
+    \item \textbf{Classification}: Training the final estimator (e.g., RandomForestClassifier).
+\end{enumerate}

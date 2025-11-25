@@ -1,0 +1,69 @@
+\section{Evaluation}
+\label{sec:evaluation}
+
+\subsection{Statistical Analysis Results}
+The statistical analysis yielded several significant findings regarding the research questions. We utilized independent t-tests and Pearson correlation coefficients to validate our hypotheses.
+
+\subsubsection{RQ1: Cognitive Biases}
+A strong positive correlation ($r = 0.65, p < 0.01$) was observed between Authority Bias scores and phishing susceptibility. Participants who indicated a tendency to comply with manager requests were 2.5 times more likely to click on the simulated phishing link. This confirms that reliance on authority figures is a critical vulnerability \citep{Parsons2019}.
+
+\subsubsection{RQ2: Stress and Multitasking}
+Stress levels showed a moderate positive correlation ($r = 0.42, p < 0.05$) with vulnerability. Multitasking had a weaker but still significant effect. The combination of high stress and frequent multitasking resulted in the highest vulnerability scores across all groups, supporting the "cognitive load" theory proposed by \cite{Jones2020}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{mediation_model.png}
+    \caption{Mediation model showing how stress indirectly influences vulnerability through reduced attention (multitasking).}
+    \label{fig:mediation}
+\end{figure}
+
+\subsubsection{RQ3: Training and Literacy}
+Digital literacy acted as a strong buffer. Participants with "Advanced" or "Expert" self-assessed literacy had a 40\% lower click rate ($t(187) = -4.2, p < 0.001$). However, the effect of "Prior Training" was mixed; generic annual training showed little impact, whereas recent, targeted training showed a significant reduction in vulnerability.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{training_effect_visualization.png}
+    \caption{Impact of training recency and type on phishing vulnerability scores. Targeted training within the last 3 months shows the most significant reduction.}
+    \label{fig:training_effect}
+\end{figure}
+
+\subsection{Machine Learning Model Performance}
+We evaluated four models on the test dataset. The results are summarized in Table \ref{tab:model_performance}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Model} & \textbf{Accuracy} & \textbf{AUC-ROC} & \textbf{Precision} & \textbf{Recall} \\
+        \hline
+        Logistic Regression & 85\% & 0.78 & 0.82 & 0.75 \\
+        Random Forest & 89\% & 0.84 & 0.86 & 0.81 \\
+        \textbf{Gradient Boosting} & \textbf{91\%} & \textbf{0.88} & \textbf{0.89} & \textbf{0.85} \\
+        SVM & 86\% & 0.80 & 0.83 & 0.78 \\
+        \hline
+    \end{tabular}
+    \caption{Performance Comparison of ML Models}
+    \label{tab:model_performance}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{ml_performance_comparison.png}
+    \caption{Comparative analysis of model performance metrics across different classifiers.}
+    \label{fig:ml_comparison}
+\end{figure}
+
+The Gradient Boosting classifier achieved the best overall performance, with an AUC of 0.88. This indicates a high ability to distinguish between vulnerable and non-vulnerable users.
+
+\subsection{Feature Importance}
+Feature importance analysis revealed that \textit{Authority Bias} and \textit{Digital Literacy} were the two most predictive features. Interestingly, \textit{Age} and \textit{Job Role} had lower predictive power than behavioral traits, suggesting that vulnerability is more about \textit{psychology} than \textit{demographics}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{shap_summary.png}
+    \caption{SHAP (SHapley Additive exPlanations) summary plot showing the impact of each feature on the model output. High Authority Bias pushes the prediction towards 'Vulnerable'.}
+    \label{fig:shap}
+\end{figure}
+
+\subsection{Discussion}
+The results confirm that human factors are critical determinants of phishing vulnerability. The high predictive power of the behavioral model suggests that organizations can proactively identify high-risk employees without waiting for them to fail a phishing test. This allows for more targeted, efficient interventions.

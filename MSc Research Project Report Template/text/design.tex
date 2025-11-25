@@ -1,0 +1,52 @@
+\section{Design and Architecture}
+\label{sec:design}
+
+\subsection{System Overview}
+The project is implemented as a modular Python pipeline designed to handle data ingestion, processing, analysis, and visualization. The architecture follows a standard data science workflow, ensuring reproducibility and scalability.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{research_framework.png}
+    \caption{Proposed Research Framework illustrating the interaction between behavioral factors and phishing vulnerability.}
+    \label{fig:framework}
+\end{figure}
+
+The system consists of four main components:
+\begin{enumerate}
+    \item \textbf{Data Preprocessing Module}: Cleans raw survey data, handles missing values, and merges it with experiment logs.
+    \item \textbf{Statistical Analysis Engine}: Performs hypothesis testing using \texttt{scipy} and \texttt{statsmodels} to validate the research questions.
+    \item \textbf{Machine Learning Pipeline}: Trains, validates, and saves predictive models using \texttt{scikit-learn} and \texttt{MLflow}.
+    \item \textbf{Visualization Dashboard}: An interactive Streamlit application for exploring results and testing the model in real-time.
+\end{enumerate}
+
+\subsection{Data Pipeline Design}
+The data pipeline (\texttt{src/processing/}) handles the transformation of raw inputs into model-ready features. Key design decisions included:
+\begin{itemize}
+    \item \textbf{Normalization}: All Likert scale responses (1-5) were normalized to a 0-1 range using Min-Max scaling. This ensures that features with different scales do not bias the model.
+    \item \textbf{Feature Engineering}: Composite scores were calculated for abstract concepts. For example, the "Cognitive Bias Score" is the mean of responses to three distinct questions related to authority and urgency.
+    \item \textbf{Handling Missing Data}: A robust imputation strategy was implemented. Numerical scores are imputed using the median (to be robust against outliers), while categorical variables are imputed using the mode.
+    \item \textbf{Duplicate Removal}: The pipeline explicitly checks for and removes duplicate columns that may arise from merging multiple data sources.
+\end{itemize}
+
+\subsection{Machine Learning Model Selection}
+We selected four distinct algorithms to benchmark performance, each offering different trade-offs between interpretability and predictive power:
+
+\subsubsection{Logistic Regression}
+Used as a baseline model. It provides excellent interpretability, allowing us to see the direct coefficient (weight) of each feature. This is crucial for explaining \textit{why} a person is classified as vulnerable.
+
+\subsubsection{Random Forest}
+An ensemble method that constructs multiple decision trees. It was selected to capture non-linear relationships and interactions between behavioral factors (e.g., the combined effect of high stress AND low training). It is also robust to overfitting.
+
+\subsubsection{Gradient Boosting (XGBoost)}
+A powerful boosting algorithm that builds trees sequentially to correct the errors of previous trees. XGBoost was chosen for its high predictive performance on structured tabular data.
+
+\subsubsection{Support Vector Machine (SVM)}
+Tested for its effectiveness in high-dimensional spaces. We utilized a Radial Basis Function (RBF) kernel to handle non-linear decision boundaries.
+
+\subsection{Evaluation Metrics}
+Model performance was evaluated using:
+\begin{itemize}
+    \item \textbf{AUC-ROC}: The primary metric, as it measures the model's ability to distinguish between classes regardless of the threshold.
+    \item \textbf{Accuracy}: The percentage of correct predictions.
+    \item \textbf{Precision and Recall}: To understand the trade-off between false positives (flagging a safe user as vulnerable) and false negatives (missing a vulnerable user).
+\end{itemize}

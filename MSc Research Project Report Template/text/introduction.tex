@@ -1,0 +1,31 @@
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Background}
+In the contemporary digital landscape, cybersecurity has evolved from a purely technical discipline into a complex socio-technical challenge. While organizations invest billions in firewalls, intrusion detection systems (IDS), and advanced encryption, the human element remains the "weakest link" in the security chain \citep{Dhamija2006}. Phishing, a form of social engineering where attackers deceive victims into revealing sensitive information or installing malware, continues to be one of the most prolific and successful attack vectors globally. According to the \cite{Verizon2024}, over 80\% of data breaches involve a human element, including phishing and the use of stolen credentials.
+
+\subsection{Problem Statement}
+Traditional cybersecurity defenses often focus on technical recognition of threats—checking URLs for typosquatting, identifying poor grammar, or verifying sender addresses. However, these methods fail to account for the psychological state of the user at the moment of the attack. An employee who is well-versed in security protocols may still fall victim to a phishing email if they are under high cognitive load, experiencing stress, or influenced by powerful cognitive biases such as authority or urgency \citep{Vishwanath2011}.
+
+Current security awareness training programs are often generic, "one-size-fits-all" compliance exercises that do not address individual behavioral vulnerabilities. As noted by \cite{Caputo2014}, passive training methods often fail to translate into active defense behaviors in real-world scenarios. There is a critical need to understand the underlying human factors—specifically how stress, multitasking, and cognitive biases impair decision-making—to design more effective, resilient defense mechanisms.
+
+\subsection{Research Objectives}
+The primary objective of this research is to quantify the impact of psychological and behavioral factors on phishing susceptibility and to develop a predictive model that can identify high-risk individuals. Specifically, this study aims to:
+\begin{itemize}
+    \item \textbf{Quantify Behavioral Risks}: Investigate the statistical relationship between specific cognitive biases (e.g., Authority Bias) and the likelihood of clicking on a phishing link.
+    \item \textbf{Assess Situational Factors}: Analyze how situational stressors and workplace multitasking habits correlate with reduced phishing detection capabilities \citep{Jones2020}.
+    \item \textbf{Evaluate Protective Factors}: Determine the effectiveness of self-assessed digital literacy and prior cybersecurity training in mitigating phishing risks.
+    \item \textbf{Develop a Predictive Model}: Design and train a machine learning classifier (e.g., Random Forest, Gradient Boosting) to accurately predict an individual's vulnerability score based on their behavioral profile.
+\end{itemize}
+
+\subsection{Research Questions}
+This study addresses the following key research questions:
+\begin{enumerate}
+    \item \textbf{RQ1}: To what extent do cognitive biases, particularly Authority Bias, influence an individual's likelihood of falling for a phishing attack?
+    \item \textbf{RQ2}: Is there a significant positive correlation between high-stress environments/multitasking habits and increased phishing vulnerability?
+    \item \textbf{RQ3}: Does higher digital literacy and recent, targeted security training significantly lower the vulnerability score?
+    \item \textbf{RQ4}: Can machine learning algorithms accurately predict phishing vulnerability (AUC > 0.8) using only non-invasive behavioral and demographic data?
+\end{enumerate}
+
+\subsection{Structure of the Report}
+The remainder of this report is organized as follows: Chapter 2 reviews existing literature on the psychology of phishing and the "Integrated Information Processing Model." Chapter 3 details the research methodology, including the survey instrument design and the simulated phishing experiment. Chapter 4 describes the system design and implementation of the data processing and machine learning pipeline. Chapter 5 presents the evaluation results, including statistical hypothesis testing and model performance metrics. Finally, Chapter 6 concludes the study, discusses limitations, and outlines future research directions.
