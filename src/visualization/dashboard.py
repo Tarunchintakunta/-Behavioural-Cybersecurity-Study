@@ -15,7 +15,7 @@ sys.path.insert(0, project_root)
 from src.models.model_evaluator import plot_confusion_matrix, plot_roc_curve
     
 # --- Page Configuration ---
-st.set_page_config(
+        st.set_page_config(
     page_title="Phishing Vulnerability Dashboard",
     page_icon="🛡️",
     layout="wide",
@@ -113,15 +113,15 @@ def render_eda(df):
     st.header("Exploratory Data Analysis (EDA)")
     st.markdown("A first look at the distribution of key variables in our dataset.")
         
-    col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
         
-    with col1:
+        with col1:
         st.subheader("Vulnerability Distribution")
         vuln_counts = df['vulnerable'].value_counts()
         fig_vuln = px.pie(values=vuln_counts.values, names=['Not Vulnerable', 'Vulnerable'], title='Proportion of Vulnerable Participants')
         st.plotly_chart(fig_vuln, use_container_width=True)
         
-    with col2:
+        with col2:
         st.subheader("Age Distribution")
         fig_age = px.histogram(df, x='D_AGE', title='Distribution of Participant Age Brackets', nbins=5)
         st.plotly_chart(fig_age, use_container_width=True)
@@ -226,10 +226,10 @@ def render_ml_performance(df, config):
         
     st.subheader("Model Evaluation on a Sample Test Set")
         
-    col1, col2 = st.columns(2)
-    with col1:
+        col1, col2 = st.columns(2)
+        with col1:
         st.pyplot(plot_confusion_matrix(y_test, y_pred, model.classes_))
-    with col2:
+        with col2:
         st.pyplot(plot_roc_curve(y_test, y_pred_proba))
 
     # You could also load SHAP summary plot if it's saved as an artifact

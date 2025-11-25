@@ -114,15 +114,6 @@ def preprocess_for_modeling(experiment_path: str, survey_path: str, output_path:
     df_exp_to_merge = df_exp[['participant_id', 'participant_action']]
 
     df_merged = pd.merge(df_survey_processed, df_exp_to_merge, on='participant_id', how='inner')
-    
-    # --- FIX: Add a check for an empty merge ---
-    if df_merged.empty:
-        logging.error("MERGE FAILED: No common participant IDs found between survey and experiment data.")
-        logging.info(f"Unique IDs in Survey Data: {sorted(df_survey_processed['participant_id'].unique())}")
-        logging.info(f"Unique IDs in Experiment Data: {sorted(df_exp['participant_id'].unique())}")
-        logging.error("Aborting preprocessing. Please check the participant IDs in your data files.")
-        return
-        
     logging.info(f"Successfully merged data. New shape: {df_merged.shape}")
 
     if df_merged.empty:
