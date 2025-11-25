@@ -1,0 +1,37 @@
+\section{Installation Guide}
+\label{sec:installation}
+
+Follow these steps to set up the project environment on your local machine.
+
+\subsection{Step 1: Unzip the Project}
+Extract the provided project zip file to a directory of your choice (e.g., \texttt{/Users/username/Projects/shailaja-project}).
+
+\subsection{Step 2: Create a Virtual Environment}
+It is recommended to use a virtual environment to manage dependencies. Open your terminal, navigate to the project directory, and run:
+
+\begin{verbatim}
+# For macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# For Windows
+python -m venv venv
+.\venv\Scripts\activate
+\end{verbatim}
+
+\subsection{Step 3: Install Dependencies}
+Once the virtual environment is active, install the required Python packages using \texttt{pip}:
+
+\begin{verbatim}
+pip install -r requirements.txt
+\end{verbatim}
+
+\subsection{Step 4: Verify Installation}
+To verify that the installation was successful, you can check the installed packages:
+
+\begin{verbatim}
+pip list
+\end{verbatim}
+
+Ensure that packages like \texttt{pandas}, \texttt{scikit-learn}, and \texttt{streamlit} are listed.
+

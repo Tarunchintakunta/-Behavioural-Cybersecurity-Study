@@ -1,0 +1,41 @@
+\section{User Guide}
+\label{sec:user_guide}
+
+This section explains how to run the various components of the project pipeline.
+
+\subsection{1. Data Preprocessing}
+The first step is to clean and prepare the raw survey and experiment data. Run the following command:
+
+\begin{verbatim}
+python src/processing/preprocess_for_modeling.py
+\end{verbatim}
+
+This script reads the raw data from \texttt{data/raw/}, cleans it, handles missing values, and saves the processed dataset to \texttt{data/processed/model\_training\_data.csv}.
+
+\subsection{2. Statistical Analysis}
+To perform the statistical analysis (ANOVA, t-tests, correlations) as defined in the research methodology:
+
+\begin{verbatim}
+python src/analysis/statistical_analysis.py
+\end{verbatim}
+
+The results will be saved as a JSON report in \texttt{results/statistical\_analysis\_report.json}.
+
+\subsection{3. Model Training}
+To train the machine learning models (Logistic Regression, Random Forest, etc.) and evaluate their performance:
+
+\begin{verbatim}
+python src/models/train_vulnerability_predictor.py
+\end{verbatim}
+
+This script trains multiple models, logs metrics to MLflow, and saves the best performing model to \texttt{models/saved/}.
+
+\subsection{4. Interactive Dashboard}
+To explore the data, view analysis results, and test the model interactively, launch the Streamlit dashboard:
+
+\begin{verbatim}
+streamlit run src/visualization/dashboard.py
+\end{verbatim}
+
+This will open a web interface in your default browser (usually at \texttt{http://localhost:8501}). Use the sidebar to navigate between "Exploratory Data Analysis", "Statistical Insights", and "ML Model Performance".
+
