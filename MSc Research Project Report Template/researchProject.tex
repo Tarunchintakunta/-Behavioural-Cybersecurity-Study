@@ -1,12 +1,12 @@
 \documentclass[12pt,a4paper]{article}
 
 %% -------------------------------
-%% NCI MSc Research Project Template  --->> Configuration Manual
+%% NCI MSc Research Project Template      
 %% -------------------------------
 
 
 % ----------------------------------------------------------------
-% Thesis - Main document
+% Config Manual - Main document
 % ----------------------------------------------------------------
 
 %Project Type Switch -- change this if and only if you are doing an industry based research project
@@ -53,11 +53,11 @@
 
 \newcommand{\myname}{Sailaja Midde}
 \newcommand{\studentID}{x23213085}
-\newcommand{\mytitle}{Configuration Manual}
+\newcommand{\mytitle}{The Role of Human Factors in Phishing Attacks: A Behavioral Cybersecurity Study}
 
 \newcommand{\wordcount}{XXX} %change this for your word count! To determine the word count, run the following from a terminal: texcount -total researchProject.tex -inc 
 
-\newcommand{\supervisor}{XXX}
+\newcommand{\supervisor}{Zakaria Sabir}
 \newcommand{\supervisortwo}{XXX} %for industry based research projects only!
 
 \newcommand{\myyear}{2025}
@@ -95,6 +95,25 @@
 }
 
 
+%% ------------------------
+%% |    Including files   |
+%% ------------------------
+% Only files listed here will be included!
+% Useful command for partially translating the document (for bug-fixing e.g.)
+\includeonly{%
+titlepage,
+text/abstract,
+text/introduction,
+text/relatedwork,
+text/methodology,
+text/design,
+text/implementation,
+text/evaluation,
+text/conclusion,
+text/declaration,
+text/appendix
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Here, main documents begins %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,25 +133,16 @@
 \maketitle
 
 \pagestyle{plain}
-\pagenumbering{roman} % Roman numbering for front matter
+\pagenumbering{arabic}
 
-\tableofcontents
-\listoffigures
-\listoftables
-
-\newpage
-\pagenumbering{arabic} % Arabic numbering for main content
-
-\input{text/section1}
-\input{text/section2}
-\input{text/section3}
-\input{text/section4}
-\input{text/section5}
-%\input{text/section6}
-%\input{text/section7}
-%\input{text/section8}
-%\input{text/section9}
-%\input{text/section10}
+\input{text/abstract}
+\input{text/introduction}
+\input{text/relatedwork}
+\input{text/methodology}
+\input{text/design}
+\input{text/implementation}
+\input{text/evaluation}
+\input{text/conclusion}
 
 
 %% --------------------
@@ -146,6 +156,5 @@
 %\bibliographystyle{IEEEtranSA})
 
 \bibliography{refs}
-
 
 \end{document}
