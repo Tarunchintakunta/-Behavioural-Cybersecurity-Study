@@ -5,13 +5,46 @@ This chapter presents the results of the data analysis and model evaluation. It 
 
 \subsection{Statistical Analysis Results}
 
+\subsubsection{Exploratory Data Analysis}
+Before hypothesis testing, we analyzed the distributions of key variables. Figure \ref{fig:age_dist} shows the age distribution of participants, while Figure \ref{fig:vuln_dist} illustrates the distribution of vulnerability scores.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/eda_age_dist.png}
+    \caption{Age Distribution of Participants}
+    \label{fig:age_dist}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/eda_vulnerability_dist.png}
+    \caption{Distribution of Vulnerability Scores}
+    \label{fig:vuln_dist}
+\end{figure}
+
+To understand the relationships between variables, a correlation heatmap was generated (Figure \ref{fig:heatmap}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/eda_correlation_heatmap.png}
+    \caption{Correlation Heatmap of Key Variables}
+    \label{fig:heatmap}
+\end{figure}
+
 \subsubsection{RQ1: Cognitive Biases and Vulnerability}
 A Pearson correlation analysis was conducted to examine the relationship between cognitive bias scores and phishing vulnerability. The analysis revealed a weak negative correlation ($r = -0.161$). This suggests that individuals with higher cognitive bias scores (indicating higher susceptibility to biases like optimism) were slightly \textit{less} likely to be vulnerable in this specific dataset, which contradicts the initial hypothesis. This unexpected result may be due to the specific nature of the biases measured or the synthetic nature of the data.
 
 \subsubsection{RQ2: Stress and Multitasking}
 The analysis of situational factors yielded significant findings.
 \begin{itemize}
-    \item \textbf{Stress}: A strong positive correlation ($r = 0.632$) was found between perceived stress levels and vulnerability. This confirms the hypothesis that high stress depletes cognitive resources, making individuals more prone to errors.
+    \item \textbf{Stress}: A strong positive correlation ($r = 0.632$) was found between perceived stress levels and vulnerability. This confirms the hypothesis that high stress depletes cognitive resources, making individuals more prone to errors. Figure \ref{fig:stress_analysis} visualizes this relationship.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/stats_stress_analysis.png}
+        \caption{Impact of Stress Levels on Vulnerability}
+        \label{fig:stress_analysis}
+    \end{figure}
     \item \textbf{Multitasking}: The correlation between multitasking habits and vulnerability was negligible ($r = -0.036$). This suggests that general multitasking tendencies may not directly translate to immediate phishing susceptibility, or that the measure used (Media Multitasking Index) did not capture the specific type of task switching relevant to email processing.
 \end{itemize}
 
@@ -22,7 +55,14 @@ An Independent Samples T-test was performed to compare the mean vulnerability sc
     \item \textbf{Mean Vulnerability (Untrained)}: 0.474
     \item \textbf{P-value}: 0.2216
 \end{itemize}
-The difference was not statistically significant ($p > 0.05$). This indicates that, in this study, prior training did not provide a measurable protective effect. This finding aligns with literature suggesting that traditional "tick-box" training is often ineffective at changing behavior.
+The difference was not statistically significant ($p > 0.05$). This indicates that, in this study, prior training did not provide a measurable protective effect. This finding aligns with literature suggesting that traditional "tick-box" training is often ineffective at changing behavior. Figure \ref{fig:training_effect} illustrates this comparison.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/training_effect_visualization.png}
+    \caption{Effect of Prior Training on Vulnerability}
+    \label{fig:training_effect}
+\end{figure}
 
 \subsubsection{RQ4: Demographic Factors (Job Role)}
 An ANOVA test was conducted to compare vulnerability across different job roles. The result was highly significant ($F = 62.71$, $p < 0.001$), indicating that job role is a strong predictor of vulnerability. This supports the need for role-specific security interventions.
@@ -100,6 +140,15 @@ To understand which factors contributed most to the model's decisions (even if b
     \includegraphics[width=0.8\textwidth]{figures/ml_feature_importance.png}
     \caption{Feature Importance Analysis}
     \label{fig:feature_importance}
+\end{figure}
+
+To provide a deeper understanding of model decisions, SHAP (SHapley Additive exPlanations) values were calculated. Figure \ref{fig:shap} shows the SHAP summary plot, highlighting the direction and magnitude of feature impact.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/shap_summary.png}
+    \caption{SHAP Summary Plot}
+    \label{fig:shap}
 \end{figure}
 
 As expected from the statistical analysis, \textbf{Stress Level} was a top predictor. However, demographic features like \textbf{Job Role} also played a significant role, confirming that certain organizational functions are inherently more targeted or vulnerable. The low predictive power of the \textbf{Training} feature reinforces the finding that current training methods are not a strong differentiator for security behavior.
