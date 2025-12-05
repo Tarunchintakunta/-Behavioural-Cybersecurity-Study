@@ -1,38 +1,70 @@
 \section{Implementation}
 \label{sec:implementation}
 
-\subsection{Technology Stack}
-The project was implemented using Python 3.9, leveraging a robust ecosystem of data science libraries:
+This chapter details the technical implementation of the research framework, including the software tools, libraries, and specific algorithms used to develop the vulnerability prediction models.
+
+\subsection{Development Environment}
+The project was implemented using the Python programming language (version 3.9+) due to its extensive ecosystem for data science and machine learning. The primary development environment was Visual Studio Code. Dependencies were managed using a virtual environment to ensure reproducibility.
+
+Key libraries used include:
 \begin{itemize}
-    \item \textbf{Pandas}: For efficient data manipulation, cleaning, and merging of survey and experiment datasets.
-    \item \textbf{Scikit-learn}: For implementing machine learning algorithms, pipeline construction, and model evaluation.
-    \item \textbf{Streamlit}: For building the interactive web-based dashboard that allows users to visualize data and test the model.
-    \item \textbf{MLflow}: For tracking experiments, logging hyperparameters, and versioning trained models.
-    \item \textbf{Statsmodels}: For conducting rigorous statistical hypothesis testing (ANOVA, t-tests).
+    \item \textbf{Pandas}: For efficient data manipulation and analysis.
+    \item \textbf{Scikit-learn}: For implementing machine learning algorithms and evaluation metrics.
+    \item \textbf{MLflow}: For tracking experiments, logging metrics, and managing model artifacts.
+    \item \textbf{Streamlit}: For creating an interactive dashboard to visualize the results.
+    \item \textbf{Statsmodels} \& \textbf{Pingouin}: For conducting statistical tests (T-tests, ANOVA).
 \end{itemize}
 
-\subsection{Code Structure}
-The codebase is organized into modular components to ensure maintainability and separation of concerns:
+\subsection{Model Implementation}
+The core logic for model training is encapsulated in the \texttt{VulnerabilityPredictor} class within \texttt{src/models/train\_vulnerability\_predictor.py}.
+
+\subsubsection{Model Initialization}
+The models are initialized with a fixed random state to ensure that results are reproducible across different runs. The configuration is loaded from a YAML file, allowing for easy tuning of hyperparameters without modifying the code.
+
+\begin{verbatim}
+models = {
+    "LogisticRegression": LogisticRegression(
+        random_state=config['random_state'], max_iter=1000
+    ),
+    "RandomForest": RandomForestClassifier(
+        random_state=config['random_state']
+    ),
+    "GradientBoosting": GradientBoostingClassifier(
+        random_state=config['random_state']
+    ),
+    "SVM": SVC(
+        probability=True, random_state=config['random_state']
+    )
+}
+\end{verbatim}
+
+\subsubsection{Training and Validation}
+The training process iterates through each model in the dictionary. For each model, K-Fold Cross-Validation (k=5) is performed on the training set. This technique provides a more robust estimate of model performance by training and validating on different subsets of the data, reducing the risk of overfitting.
+
+The primary metric for optimization was the Area Under the Receiver Operating Characteristic Curve (ROC AUC), as it is less sensitive to class imbalance than accuracy.
+
+\begin{verbatim}
+cv_scores = cross_val_score(
+    model, X_train, y_train, 
+    cv=5, scoring='roc_auc'
+)
+mean_cv_score = cv_scores.mean()
+\end{verbatim}
+
+\subsection{Experiment Tracking with MLflow}
+MLflow was integrated into the training loop to automatically log parameters and metrics. This allowed for a systematic comparison of different model architectures and feature sets.
+
+\begin{verbatim}
+with mlflow.start_run():
+    mlflow.log_params(config)
+    mlflow.log_metric("cv_auc", mean_cv_score)
+    mlflow.sklearn.log_model(model, "model")
+\end{verbatim}
+
+\subsection{Interactive Dashboard}
+To make the findings accessible to non-technical stakeholders, a Streamlit dashboard was developed. The dashboard allows users to:
 \begin{itemize}
-    \item \texttt{src/processing/}: Contains scripts for data cleaning and feature engineering. The \texttt{preprocess\_for\_modeling.py} script handles the complex logic of merging survey responses with experiment logs based on Participant IDs.
-    \item \texttt{src/analysis/}: Includes \texttt{statistical\_analysis.py}, which performs hypothesis testing and generates a JSON report of findings.
-    \item \texttt{src/models/}: Houses the training pipeline (\texttt{train\_vulnerability\_predictor.py}). This script handles data splitting, SMOTE (Synthetic Minority Over-sampling Technique) for class imbalance, and model serialization.
-    \item \texttt{src/visualization/}: Contains the Streamlit dashboard code (\texttt{dashboard.py}), which dynamically loads the latest trained model for inference.
+    \item Explore the dataset through interactive charts.
+    \item View the results of the statistical analysis.
+    \item Test the trained models by inputting hypothetical user profiles and receiving a vulnerability prediction.
 \end{itemize}
-
-\subsection{Key Algorithms}
-\subsubsection{Vulnerability Scoring}
-A custom algorithm was developed to calculate a composite "Vulnerability Score" for each participant. This score is a weighted average of normalized sub-scores:
-\begin{equation}
-    V = w_1 \cdot S_{bias} + w_2 \cdot S_{stress} + w_3 \cdot S_{multi} - w_4 \cdot S_{literacy} - w_5 \cdot S_{training}
-\end{equation}
-Where weights ($w$) were determined based on the correlation coefficients found in the preliminary analysis.
-
-\subsubsection{Model Training Pipeline}
-The training pipeline utilizes \texttt{GridSearchCV} for hyperparameter tuning. It employs a 5-fold cross-validation strategy to ensure the model generalizes well to unseen data. The pipeline automatically handles:
-\begin{enumerate}
-    \item \textbf{Imputation}: Filling missing values.
-    \item \textbf{Scaling}: Standardizing features to zero mean and unit variance.
-    \item \textbf{Selection}: Choosing the top $k$ features based on mutual information.
-    \item \textbf{Classification}: Training the final estimator (e.g., RandomForestClassifier).
-\end{enumerate}

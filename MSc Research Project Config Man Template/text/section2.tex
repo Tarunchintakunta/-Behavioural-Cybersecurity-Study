@@ -35,3 +35,12 @@ pip list
 
 Ensure that packages like \texttt{pandas}, \texttt{scikit-learn}, and \texttt{streamlit} are listed.
 
+\subsection{Step 5: Data Setup}
+Before running any analysis, ensure that the raw data files are placed in the correct directories.
+\begin{enumerate}
+    \item Place the raw survey response CSV file in \texttt{data/raw/}.
+    \item Place the experiment results CSV file in \texttt{data/synthetic/} (or \texttt{data/raw/} if using real experiment data).
+\end{enumerate}
+
+The preprocessing script is configured to look for specific filenames. If your filenames differ, you may need to update the paths in \texttt{src/processing/preprocess\_for\_modeling.py} or rename your files to match the expected defaults.
+

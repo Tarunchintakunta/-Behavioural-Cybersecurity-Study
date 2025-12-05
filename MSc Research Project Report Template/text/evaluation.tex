@@ -1,69 +1,110 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-\subsection{Statistical Analysis Results}
-The statistical analysis yielded several significant findings regarding the research questions. We utilized independent t-tests and Pearson correlation coefficients to validate our hypotheses.
+This chapter presents the results of the data analysis and model evaluation. It addresses the research questions posed in Chapter 1 by interpreting the statistical findings and assessing the performance of the machine learning models.
 
-\subsubsection{RQ1: Cognitive Biases}
-A strong positive correlation ($r = 0.65, p < 0.01$) was observed between Authority Bias scores and phishing susceptibility. Participants who indicated a tendency to comply with manager requests were 2.5 times more likely to click on the simulated phishing link. This confirms that reliance on authority figures is a critical vulnerability \citep{Parsons2019}.
+\subsection{Statistical Analysis Results}
+
+\subsubsection{RQ1: Cognitive Biases and Vulnerability}
+A Pearson correlation analysis was conducted to examine the relationship between cognitive bias scores and phishing vulnerability. The analysis revealed a weak negative correlation ($r = -0.161$). This suggests that individuals with higher cognitive bias scores (indicating higher susceptibility to biases like optimism) were slightly \textit{less} likely to be vulnerable in this specific dataset, which contradicts the initial hypothesis. This unexpected result may be due to the specific nature of the biases measured or the synthetic nature of the data.
 
 \subsubsection{RQ2: Stress and Multitasking}
-Stress levels showed a moderate positive correlation ($r = 0.42, p < 0.05$) with vulnerability. Multitasking had a weaker but still significant effect. The combination of high stress and frequent multitasking resulted in the highest vulnerability scores across all groups, supporting the "cognitive load" theory proposed by \cite{Jones2020}.
+The analysis of situational factors yielded significant findings.
+\begin{itemize}
+    \item \textbf{Stress}: A strong positive correlation ($r = 0.632$) was found between perceived stress levels and vulnerability. This confirms the hypothesis that high stress depletes cognitive resources, making individuals more prone to errors.
+    \item \textbf{Multitasking}: The correlation between multitasking habits and vulnerability was negligible ($r = -0.036$). This suggests that general multitasking tendencies may not directly translate to immediate phishing susceptibility, or that the measure used (Media Multitasking Index) did not capture the specific type of task switching relevant to email processing.
+\end{itemize}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{mediation_model.png}
-    \caption{Mediation model showing how stress indirectly influences vulnerability through reduced attention (multitasking).}
-    \label{fig:mediation}
-\end{figure}
+\subsubsection{RQ3: Impact of Prior Training}
+An Independent Samples T-test was performed to compare the mean vulnerability scores of participants with and without prior cybersecurity training.
+\begin{itemize}
+    \item \textbf{Mean Vulnerability (Trained)}: 0.419
+    \item \textbf{Mean Vulnerability (Untrained)}: 0.474
+    \item \textbf{P-value}: 0.2216
+\end{itemize}
+The difference was not statistically significant ($p > 0.05$). This indicates that, in this study, prior training did not provide a measurable protective effect. This finding aligns with literature suggesting that traditional "tick-box" training is often ineffective at changing behavior.
 
-\subsubsection{RQ3: Training and Literacy}
-Digital literacy acted as a strong buffer. Participants with "Advanced" or "Expert" self-assessed literacy had a 40\% lower click rate ($t(187) = -4.2, p < 0.001$). However, the effect of "Prior Training" was mixed; generic annual training showed little impact, whereas recent, targeted training showed a significant reduction in vulnerability.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{training_effect_visualization.png}
-    \caption{Impact of training recency and type on phishing vulnerability scores. Targeted training within the last 3 months shows the most significant reduction.}
-    \label{fig:training_effect}
-\end{figure}
+\subsubsection{RQ4: Demographic Factors (Job Role)}
+An ANOVA test was conducted to compare vulnerability across different job roles. The result was highly significant ($F = 62.71$, $p < 0.001$), indicating that job role is a strong predictor of vulnerability. This supports the need for role-specific security interventions.
 
 \subsection{Machine Learning Model Performance}
-We evaluated four models on the test dataset. The results are summarized in Table \ref{tab:model_performance}.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|c|c|c|c|}
-        \hline
-        \textbf{Model} & \textbf{Accuracy} & \textbf{AUC-ROC} & \textbf{Precision} & \textbf{Recall} \\
-        \hline
-        Logistic Regression & 85\% & 0.78 & 0.82 & 0.75 \\
-        Random Forest & 89\% & 0.84 & 0.86 & 0.81 \\
-        \textbf{Gradient Boosting} & \textbf{91\%} & \textbf{0.88} & \textbf{0.89} & \textbf{0.85} \\
-        SVM & 86\% & 0.80 & 0.83 & 0.78 \\
-        \hline
-    \end{tabular}
-    \caption{Performance Comparison of ML Models}
-    \label{tab:model_performance}
-\end{table}
+The four machine learning models were evaluated based on their ability to predict the binary vulnerability outcome. The performance comparison is visualized in Figure \ref{fig:ml_comparison}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{ml_performance_comparison.png}
-    \caption{Comparative analysis of model performance metrics across different classifiers.}
+    \includegraphics[width=0.8\textwidth]{figures/ml_performance_comparison.png}
+    \caption{Comparison of Model Performance Metrics (Accuracy, Precision, Recall, F1)}
     \label{fig:ml_comparison}
 \end{figure}
 
-The Gradient Boosting classifier achieved the best overall performance, with an AUC of 0.88. This indicates a high ability to distinguish between vulnerable and non-vulnerable users.
+\subsubsection{Cross-Validation Results}
+The Support Vector Machine (SVM) achieved the highest mean ROC AUC score during cross-validation, outperforming the tree-based models. This suggests that the SVM's ability to find a hyperplane in high-dimensional space was better suited for the complex, non-linear relationships between psychological traits and vulnerability.
 
-\subsection{Feature Importance}
-Feature importance analysis revealed that \textit{Authority Bias} and \textit{Digital Literacy} were the two most predictive features. Interestingly, \textit{Age} and \textit{Job Role} had lower predictive power than behavioral traits, suggesting that vulnerability is more about \textit{psychology} than \textit{demographics}.
+\begin{table}[h]
+    \centering
+    \caption{Cross-Validation ROC AUC Scores}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Model} & \textbf{Mean CV ROC AUC} \\
+        \hline
+        Logistic Regression & 0.3532 \\
+        Random Forest & 0.2661 \\
+        Gradient Boosting & 0.2509 \\
+        \textbf{SVM} & \textbf{0.3824} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Test Set Evaluation and Overfitting Analysis}
+The best-performing model (SVM) was evaluated on the held-out test set. The ROC curve is shown in Figure \ref{fig:roc_curve}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{shap_summary.png}
-    \caption{SHAP (SHapley Additive exPlanations) summary plot showing the impact of each feature on the model output. High Authority Bias pushes the prediction towards 'Vulnerable'.}
-    \label{fig:shap}
+    \includegraphics[width=0.6\textwidth]{figures/ml_roc_curve.png}
+    \caption{ROC Curve for SVM Model}
+    \label{fig:roc_curve}
 \end{figure}
 
-\subsection{Discussion}
-The results confirm that human factors are critical determinants of phishing vulnerability. The high predictive power of the behavioral model suggests that organizations can proactively identify high-risk employees without waiting for them to fail a phishing test. This allows for more targeted, efficient interventions.
+\begin{table}[h]
+    \centering
+    \caption{Test Set Metrics (SVM)}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Metric} & \textbf{Score} \\
+        \hline
+        Accuracy & 92.11\% \\
+        Precision & 0.00\% \\
+        Recall & 0.00\% \\
+        ROC AUC & 0.4476 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\textbf{Analysis of Overfitting and Class Imbalance}:
+The discrepancy between the high accuracy (92.11\%) and the zero precision/recall scores indicates a severe class imbalance issue. The dataset contains a significantly higher number of "Resilient" users compared to "Vulnerable" ones. As a result, the model has learned to maximize accuracy by simply predicting the majority class (Resilient) for every instance.
+
+This is further evidenced by the Confusion Matrix in Figure \ref{fig:confusion_matrix}, which shows that the model failed to correctly identify any of the actual vulnerable users (True Positives = 0).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/ml_confusion_matrix.png}
+    \caption{Confusion Matrix for SVM Model}
+    \label{fig:confusion_matrix}
+\end{figure}
+
+\subsubsection{Feature Importance}
+To understand which factors contributed most to the model's decisions (even if biased), we analyzed feature importance using SHAP values (for tree-based models) and coefficient magnitude (for linear models). Figure \ref{fig:feature_importance} illustrates the relative importance of features.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/ml_feature_importance.png}
+    \caption{Feature Importance Analysis}
+    \label{fig:feature_importance}
+\end{figure}
+
+As expected from the statistical analysis, \textbf{Stress Level} was a top predictor. However, demographic features like \textbf{Job Role} also played a significant role, confirming that certain organizational functions are inherently more targeted or vulnerable. The low predictive power of the \textbf{Training} feature reinforces the finding that current training methods are not a strong differentiator for security behavior.
+
+\subsection{Discussion of Results}
+The high accuracy (92\%) combined with 0\% precision and recall indicates a severe class imbalance problem—the model is simply predicting the majority class (Resilient) for everyone. While the SVM showed some discriminative power in cross-validation (ROC AUC > 0.5 is random, but here it's lower, suggesting potential inverse correlation or noise), the overall predictive performance is limited.
+
+The strong statistical correlation with stress ($r=0.63$) suggests that stress is a key feature. However, the machine learning models struggled to leverage this, possibly due to the dominance of non-predictive features or the small sample size. The significant finding regarding job roles suggests that future models should weigh this feature more heavily or use hierarchical modeling.

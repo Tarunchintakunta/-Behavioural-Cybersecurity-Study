@@ -29,3 +29,30 @@ The project relies on the following key Python libraries, which are listed in \t
     \item \textbf{matplotlib} \& \textbf{seaborn} \& \textbf{plotly}: For data visualization.
 \end{itemize}
 
+\subsection{Project Structure}
+The project follows a modular directory structure to separate data, source code, and results.
+
+\begin{itemize}
+    \item \texttt{config/}: Contains configuration files (e.g., \texttt{config.yaml}) for model parameters.
+    \item \texttt{data/}: Stores all datasets.
+    \begin{itemize}
+        \item \texttt{raw/}: Original survey and experiment data.
+        \item \texttt{processed/}: Cleaned data ready for modeling.
+        \item \texttt{synthetic/}: Generated data for testing purposes.
+    \end{itemize}
+    \item \texttt{mlruns/}: MLflow tracking data (metrics, parameters, artifacts).
+    \item \texttt{models/}: Saved trained models (e.g., \texttt{.joblib} files).
+    \item \texttt{results/}: Output reports from statistical analysis.
+    \item \texttt{src/}: Source code for the project.
+    \begin{itemize}
+        \item \texttt{analysis/}: Scripts for statistical testing.
+        \item \texttt{data\_collection/}: Scripts for data ingestion and cleaning.
+        \item \texttt{models/}: Machine learning training and evaluation scripts.
+        \item \texttt{processing/}: Data preprocessing pipelines.
+        \item \texttt{utils/}: Helper functions and logging utilities.
+        \item \texttt{visualization/}: Streamlit dashboard code.
+    \end{itemize}
+    \item \texttt{tests/}: Unit tests for the codebase.
+    \item \texttt{requirements.txt}: List of Python dependencies.
+\end{itemize}
+

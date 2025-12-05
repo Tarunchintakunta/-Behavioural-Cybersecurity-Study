@@ -1,52 +1,64 @@
 \section{Design and Architecture}
 \label{sec:design}
 
-\subsection{System Overview}
-The project is implemented as a modular Python pipeline designed to handle data ingestion, processing, analysis, and visualization. The architecture follows a standard data science workflow, ensuring reproducibility and scalability.
+This chapter describes the system architecture and the data processing pipeline designed to analyze the collected data and train the predictive models.
+
+\subsection{System Architecture}
+The research framework is built upon a modular architecture comprising three main components: Data Ingestion, Data Processing, and Model Development.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{research_framework.png}
-    \caption{Proposed Research Framework illustrating the interaction between behavioral factors and phishing vulnerability.}
+    \includegraphics[width=0.8\textwidth]{figures/system_architecture.png}
+    \caption{High-Level System Architecture}
+    \label{fig:architecture}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/research_framework.png}
+    \caption{Research Framework: Integrating Data Collection, Processing, and Modeling}
     \label{fig:framework}
 \end{figure}
 
-The system consists of four main components:
+\begin{itemize}
+    \item \textbf{Data Ingestion Layer}: Responsible for collecting raw data from the survey platform (CSV export) and the phishing simulation tool (log files).
+    \item \textbf{Data Processing Layer}: Handles data cleaning, standardization, merging, and feature engineering. This layer transforms raw inputs into a structured dataset suitable for machine learning.
+    \item \textbf{Model Development Layer}: Includes the training, validation, and testing of various machine learning algorithms. It utilizes MLflow for experiment tracking and model versioning.
+\end{itemize}
+
+\subsection{Data Processing Pipeline}
+The data processing pipeline, implemented in Python, is critical for ensuring data quality. The key steps are as follows:
+
+\subsubsection{Data Cleaning and Standardization}
+Raw data often contains inconsistencies. The \texttt{preprocess\_for\_modeling.py} script performs the following operations:
+\begin{itemize}
+    \item \textbf{Participant ID Standardization}: To merge survey and experiment data, a common key is required. The script standardizes participant IDs to a \texttt{PXXX} format (e.g., P001, P042), handling variations in input formats (e.g., "Participant 1", "p1").
+    \item \textbf{Missing Value Imputation}: Numerical features with missing values are imputed using the median, while categorical features are imputed using the mode. This prevents data loss and ensures the models can handle incomplete records.
+\end{itemize}
+
+\subsubsection{Feature Engineering}
+Raw survey responses were transformed into quantitative scores to serve as model features:
+\begin{itemize}
+    \item \textbf{Cognitive Bias Score}: Aggregated score from the bias-related questions, normalized to a 0-1 scale.
+    \item \textbf{Stress Level Score}: Derived from the Perceived Stress Scale questions.
+    \item \textbf{Multitasking Habits Score}: Derived from the Media Multitasking Index questions.
+    \item \textbf{Vulnerability Score}: The target variable. A binary classification was used: 1 (Vulnerable) if the user clicked the phishing link, and 0 (Resilient) otherwise.
+\end{itemize}
+
+\subsubsection{Data Merging}
+The cleaned survey dataframe (features) and the experiment dataframe (labels) are merged using an inner join on the standardized \texttt{participant\_id}. This results in a final dataset where each row represents a unique participant with their corresponding psychological profile and behavioral outcome.
+
+\subsection{Machine Learning Workflow}
+The machine learning workflow follows standard best practices:
 \begin{enumerate}
-    \item \textbf{Data Preprocessing Module}: Cleans raw survey data, handles missing values, and merges it with experiment logs.
-    \item \textbf{Statistical Analysis Engine}: Performs hypothesis testing using \texttt{scipy} and \texttt{statsmodels} to validate the research questions.
-    \item \textbf{Machine Learning Pipeline}: Trains, validates, and saves predictive models using \texttt{scikit-learn} and \texttt{MLflow}.
-    \item \textbf{Visualization Dashboard}: An interactive Streamlit application for exploring results and testing the model in real-time.
+    \item \textbf{Data Splitting}: The dataset is split into a training set (80\%) and a testing set (20\%). Stratified sampling is used to ensure the class distribution (vulnerable vs. resilient) is preserved in both sets.
+    \item \textbf{Preprocessing}: Categorical variables (e.g., Job Role) are encoded using Label Encoding. Numerical variables are scaled if necessary (though tree-based models are generally robust to unscaled data).
+    \item \textbf{Model Selection}: Four candidate models were selected for evaluation:
+    \begin{itemize}
+        \item Logistic Regression (Baseline)
+        \item Random Forest Classifier
+        \item Gradient Boosting Classifier
+        \item Support Vector Machine (SVM)
+    \end{itemize}
+    \item \textbf{Experiment Tracking}: MLflow is integrated to log hyperparameters, metrics (Accuracy, Precision, Recall, ROC AUC), and artifacts (confusion matrices, ROC curves) for each run, ensuring reproducibility.
 \end{enumerate}
-
-\subsection{Data Pipeline Design}
-The data pipeline (\texttt{src/processing/}) handles the transformation of raw inputs into model-ready features. Key design decisions included:
-\begin{itemize}
-    \item \textbf{Normalization}: All Likert scale responses (1-5) were normalized to a 0-1 range using Min-Max scaling. This ensures that features with different scales do not bias the model.
-    \item \textbf{Feature Engineering}: Composite scores were calculated for abstract concepts. For example, the "Cognitive Bias Score" is the mean of responses to three distinct questions related to authority and urgency.
-    \item \textbf{Handling Missing Data}: A robust imputation strategy was implemented. Numerical scores are imputed using the median (to be robust against outliers), while categorical variables are imputed using the mode.
-    \item \textbf{Duplicate Removal}: The pipeline explicitly checks for and removes duplicate columns that may arise from merging multiple data sources.
-\end{itemize}
-
-\subsection{Machine Learning Model Selection}
-We selected four distinct algorithms to benchmark performance, each offering different trade-offs between interpretability and predictive power:
-
-\subsubsection{Logistic Regression}
-Used as a baseline model. It provides excellent interpretability, allowing us to see the direct coefficient (weight) of each feature. This is crucial for explaining \textit{why} a person is classified as vulnerable.
-
-\subsubsection{Random Forest}
-An ensemble method that constructs multiple decision trees. It was selected to capture non-linear relationships and interactions between behavioral factors (e.g., the combined effect of high stress AND low training). It is also robust to overfitting.
-
-\subsubsection{Gradient Boosting (XGBoost)}
-A powerful boosting algorithm that builds trees sequentially to correct the errors of previous trees. XGBoost was chosen for its high predictive performance on structured tabular data.
-
-\subsubsection{Support Vector Machine (SVM)}
-Tested for its effectiveness in high-dimensional spaces. We utilized a Radial Basis Function (RBF) kernel to handle non-linear decision boundaries.
-
-\subsection{Evaluation Metrics}
-Model performance was evaluated using:
-\begin{itemize}
-    \item \textbf{AUC-ROC}: The primary metric, as it measures the model's ability to distinguish between classes regardless of the threshold.
-    \item \textbf{Accuracy}: The percentage of correct predictions.
-    \item \textbf{Precision and Recall}: To understand the trade-off between false positives (flagging a safe user as vulnerable) and false negatives (missing a vulnerable user).
-\end{itemize}

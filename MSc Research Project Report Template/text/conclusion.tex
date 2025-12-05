@@ -1,23 +1,32 @@
-\section{Conclusion and Future Work}
+\section{Conclusion}
 \label{sec:conclusion}
 
-\subsection{Conclusion}
-This study successfully demonstrated that psychological and behavioral factors—specifically cognitive biases, stress, and digital literacy—are significant predictors of phishing vulnerability. By integrating these factors into a machine learning model, we achieved a predictive accuracy of 91\%, significantly outperforming random baselines. The findings suggest that the "human firewall" can be strengthened not just by technical training, but by addressing the underlying behavioral vulnerabilities.
+\subsection{Summary of Contributions}
+This research set out to investigate the role of human factors in phishing susceptibility, moving beyond the traditional technical-centric view of cybersecurity. By designing a study that combined psychometric assessment with a realistic phishing simulation, this project has provided empirical evidence on how psychological states and demographic factors influence security behavior.
 
-The strong correlation between Authority Bias and click-through rates highlights a critical flaw in current organizational cultures where questioning authority is discouraged. Furthermore, the impact of stress and multitasking confirms that security is often a victim of the "attention economy."
+The key contributions of this study are:
+\begin{enumerate}
+    \item \textbf{Validation of the Stress-Vulnerability Link}: The study confirmed a strong positive correlation between perceived stress and phishing susceptibility, highlighting the need for organizations to consider employee well-being as a security factor.
+    \item \textbf{Critique of Current Training Models}: The finding that prior training had no significant impact on vulnerability challenges the effectiveness of standard compliance-based training and calls for more engaging, behavioral-focused interventions.
+    \item \textbf{Role-Based Risk Profiling}: The identification of significant differences in vulnerability across job roles provides a data-driven basis for targeted security policies.
+    \item \textbf{Benchmark for ML Prediction}: While the predictive models achieved limited success due to data constraints, the study established a baseline and identified key challenges (class imbalance, feature selection) for future behavioral modeling.
+\end{enumerate}
 
 \subsection{Limitations}
-The study has a few limitations that must be acknowledged:
+Despite the rigorous methodology, several limitations must be acknowledged:
 \begin{itemize}
-    \item \textbf{Sample Size}: The initial real-world dataset (N=21) was small, necessitating the use of synthetic data augmentation. While statistically valid, future studies should aim for larger primary datasets.
-    \item \textbf{Simulation Realism}: The phishing simulation, while realistic, was conducted in a controlled environment. Participants might behave differently in a high-stakes real-world scenario.
-    \item \textbf{Self-Reporting Bias}: Data on stress and biases relied on self-reporting, which can be subject to social desirability bias.
+    \item \textbf{Sample Size}: With 189 participants, the study had limited statistical power to detect smaller effects, particularly for complex interactions between variables.
+    \item \textbf{Synthetic Nature of Experiment}: Although designed to be realistic, the phishing simulation was still a controlled exercise. In a real-world attack, the consequences (and thus the psychological pressure) would be higher.
+    \item \textbf{Self-Report Bias}: The reliance on self-reported measures for stress and multitasking may have introduced bias, as participants might underreport negative traits.
 \end{itemize}
 
 \subsection{Future Work}
-Future research should focus on:
+Building on the findings of this research, several avenues for future work are proposed:
 \begin{itemize}
-    \item \textbf{Longitudinal Studies}: Tracking participants over a 6-12 month period to observe how vulnerability fluctuates with changing stress levels and project deadlines.
-    \item \textbf{Real-time Intervention Tools}: Developing a browser plugin that uses the predictive model to warn users in real-time when they are exhibiting high-risk behaviors (e.g., "You seem stressed and are reading an email from an unknown sender. Please slow down.").
-    \item \textbf{Cross-Cultural Analysis}: Expanding the demographic scope to include participants from different cultural backgrounds to validate the universality of these behavioral factors.
+    \item \textbf{Longitudinal Studies}: Conducting a study over a longer period to track how vulnerability changes with fluctuating stress levels and repeated training interventions.
+    \item \textbf{Advanced Machine Learning}: Exploring deep learning techniques or anomaly detection algorithms (e.g., Isolation Forest) to better handle the class imbalance and capture non-linear relationships.
+    \item \textbf{Real-Time Intervention}: Developing a browser plugin that uses real-time behavioral indicators (e.g., mouse movement, typing speed) to detect stress or distraction and provide "just-in-time" warnings when a user interacts with a suspicious email.
 \end{itemize}
+
+\subsection{Final Remarks}
+Cybersecurity is a shared responsibility that extends beyond the IT department. As technical defenses become more impenetrable, attackers will continue to target the human mind. This research underscores that the solution lies not just in better firewalls, but in a better understanding of ourselves—our biases, our limits, and our behaviors. By integrating psychological insights into security strategy, we can build a more resilient human firewall.

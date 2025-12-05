@@ -1,49 +1,40 @@
 \section{Methodology}
 \label{sec:methodology}
 
+This chapter outlines the research methodology adopted to investigate the relationship between human factors and phishing vulnerability. It details the research design, data collection instruments, participant selection, and ethical considerations.
+
 \subsection{Research Design}
-This study employs a quantitative research design to establish correlations between behavioral factors and phishing vulnerability. The research was conducted in two distinct phases:
+The study employs a quantitative research design, utilizing a correlational and experimental approach. The correlational aspect involves assessing the relationship between independent variables (cognitive biases, stress, multitasking, demographics) and the dependent variable (phishing vulnerability). The experimental aspect involves a simulated phishing campaign to measure actual behavioral responses rather than relying solely on self-reported intentions.
+
+This dual-method approach was chosen to overcome the limitations of purely survey-based studies, which often suffer from social desirability bias—where participants overstate their security awareness. By comparing survey responses with actual behavior in the simulation, the study aims to provide a more accurate assessment of vulnerability.
+
+\subsection{Data Collection Instruments}
+Data collection was conducted in two phases:
+
+\subsubsection{Phase 1: Psychometric Survey}
+A structured online questionnaire was designed to capture demographic data and psychological traits. The survey consisted of four sections:
 \begin{enumerate}
-    \item \textbf{Phase 1: Behavioral Survey}: Participants completed a detailed questionnaire designed to assess their demographics, digital literacy, stress levels, and susceptibility to cognitive biases.
-    \item \textbf{Phase 2: Simulated Phishing Experiment}: A subset of participants were subjected to a controlled phishing simulation to measure their actual behavioral response (clicking a link vs. ignoring/reporting).
+    \item \textbf{Demographics}: Age, gender, education level, job role, and years of experience.
+    \item \textbf{Cognitive Biases}: A series of scenario-based questions adapted from standard psychological scales to measure susceptibility to optimism bias, authority bias, and scarcity bias.
+    \item \textbf{Situational Factors}: Self-assessment of current stress levels (using the Perceived Stress Scale) and multitasking habits (using the Media Multitasking Index).
+    \item \textbf{Security Awareness}: Questions regarding prior cybersecurity training and general knowledge of phishing indicators.
 \end{enumerate}
 
-\subsection{Data Collection Instrument}
-The primary data collection instrument was a structured survey consisting of 20 questions, categorized as follows:
-
-\subsubsection{Demographics}
+\subsubsection{Phase 2: Phishing Simulation}
+Approximately two weeks after the survey, participants were subjected to a simulated phishing attack. The simulation involved sending a carefully crafted email mimicking a legitimate internal communication (e.g., "Urgent: Password Expiry Notification"). The email contained a link to a benign landing page that recorded whether the participant:
 \begin{itemize}
-    \item \textbf{Age Group}: (e.g., 18-24, 25-34, etc.)
-    \item \textbf{Experience}: Years of professional experience.
-    \item \textbf{Job Role}: (e.g., Technical, Management, Administrative).
+    \item Opened the email.
+    \item Clicked the link (indicating vulnerability).
+    \item Reported the email to the IT security team (indicating resilience).
 \end{itemize}
 
-\subsubsection{Behavioral & Psychological Factors}
-The survey utilized a 5-point Likert scale (1=Strongly Disagree, 5=Strongly Agree) to measure specific constructs:
-\begin{itemize}
-    \item \textbf{Authority Bias}: Measured by agreement with statements like "I tend to follow requests from managers without questioning them."
-    \item \textbf{Stress Levels}: Assessed via questions such as "I often feel overwhelmed by my workload."
-    \item \textbf{Multitasking}: "I frequently switch between tasks while checking emails."
-    \item \textbf{Digital Literacy}: Self-assessment of technical skills and confidence in identifying online threats.
-    \item \textbf{Security Awareness}: Frequency and recency of cybersecurity training.
-\end{itemize}
-
-\subsection{Vulnerability Scoring Algorithm}
-To quantify "phishing vulnerability" for the purpose of analysis, a composite score was calculated for each participant. The \textit{Vulnerability Score} ($V$) is defined as a weighted linear combination of the normalized survey responses:
-
-\begin{equation}
-    V = \alpha \cdot S_{bias} + \beta \cdot S_{stress} + \gamma \cdot S_{multi} - \delta \cdot S_{literacy} - \epsilon \cdot S_{training}
-\end{equation}
-
-Where:
-\begin{itemize}
-    \item $S_{bias}$, $S_{stress}$, $S_{multi}$ are the normalized scores for Authority Bias, Stress, and Multitasking (risk factors).
-    \item $S_{literacy}$, $S_{training}$ are the normalized scores for Digital Literacy and Training (protective factors).
-    \item $\alpha, \beta, \gamma, \delta, \epsilon$ are weights determined by the correlation coefficients observed in the pilot study.
-\end{itemize}
-
-\subsection{Synthetic Data Generation}
-To overcome the limitations of a small sample size (N=21) from the initial survey, a synthetic dataset was generated to simulate a larger population (N=2700). This generation process used the statistical distributions (mean and standard deviation) observed in the real data to create realistic "virtual participants." This allowed for more robust training of machine learning models, ensuring that the classifiers could learn complex non-linear relationships without overfitting to the small pilot dataset.
+\subsection{Participants}
+The study sample consisted of N=189 participants recruited from a mid-sized technology company. The selection criteria ensured a diverse representation of job roles, ranging from technical staff (developers, IT support) to non-technical staff (HR, finance, sales). Participation was voluntary, and no monetary incentives were provided to avoid skewing the results.
 
 \subsection{Ethical Considerations}
-Ethical approval was obtained from the National College of Ireland's Ethics Committee. All participants provided informed consent. The phishing simulation was conducted in a "sandbox" environment where no actual malicious code was executed, and no sensitive personal data (PII) was collected beyond the necessary demographic categories. Participants were debriefed immediately after the experiment.
+Ethical approval was obtained from the university's ethics committee prior to data collection. Key ethical measures included:
+\begin{itemize}
+    \item \textbf{Informed Consent}: Participants were informed about the general nature of the study (a "cybersecurity behavior study") but were not explicitly told about the phishing simulation to maintain the element of surprise. A debriefing session was held after the experiment.
+    \item \textbf{Anonymity}: All data was anonymized. Participant IDs were used to link survey responses with simulation results, ensuring that individual performance could not be traced back to specific employees by their management.
+    \item \textbf{Data Protection}: All collected data was stored on encrypted servers and accessible only to the research team.
+\end{itemize}

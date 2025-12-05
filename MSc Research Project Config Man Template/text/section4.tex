@@ -1,5 +1,60 @@
-\section{Section 4}
-\label{sec:sec4}
+\section{Model Performance Results}
+\label{sec:results}
 
-Your fourth section. Change the header and label to something appropriate.
+This section presents the performance metrics of the machine learning models trained for phishing vulnerability prediction. The models were evaluated using 5-fold cross-validation on the training set and final testing on a held-out test set.
 
+\subsection{Cross-Validation Results}
+The following table summarizes the Receiver Operating Characteristic Area Under the Curve (ROC AUC) scores obtained during the cross-validation phase. The Support Vector Machine (SVM) achieved the highest mean CV ROC AUC score.
+
+\begin{table}[h]
+    \centering
+    \caption{Cross-Validation ROC AUC Scores}
+    \label{tab:cv_results}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Model} & \textbf{Mean CV ROC AUC} \\
+        \hline
+        Logistic Regression & 0.3532 \\
+        Random Forest & 0.2661 \\
+        Gradient Boosting & 0.2509 \\
+        Support Vector Machine (SVM) & \textbf{0.3824} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Test Set Performance}
+The best performing model (SVM) was selected and evaluated on the test set. The results are presented below. Note that the high accuracy but low precision/recall suggests a class imbalance issue or a tendency to predict the majority class, which is a common challenge in vulnerability prediction tasks.
+
+\begin{table}[h]
+    \centering
+    \caption{Test Set Metrics for Best Model (SVM)}
+    \label{tab:test_results}
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Metric} & \textbf{Score} \\
+        \hline
+        Accuracy & 0.9211 \\
+        Precision & 0.0000 \\
+        Recall & 0.0000 \\
+        ROC AUC & 0.4476 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Model Hyperparameters}
+The models were trained with the following configurations to ensure reproducibility and optimal performance within the constraints of the dataset.
+
+\begin{itemize}
+    \item \textbf{Logistic Regression}: \texttt{max\_iter=1000} to ensure convergence.
+    \item \textbf{Random Forest}: Default parameters with \texttt{random\_state=42}.
+    \item \textbf{Gradient Boosting}: Default parameters with \texttt{random\_state=42}.
+    \item \textbf{SVM}: \texttt{probability=True} to enable ROC AUC calculation.
+\end{itemize}
+
+\subsection{Interpretation of Results}
+The results indicate that predicting phishing vulnerability based on the current feature set is a challenging task. The SVM model showed the most promise during cross-validation, but the test set results highlight the difficulty in generalizing to unseen data, particularly in correctly identifying the vulnerable cases (as indicated by the low recall). Future work could focus on:
+\begin{enumerate}
+    \item Addressing class imbalance using techniques like SMOTE or ADASYN.
+    \item Feature engineering to extract more discriminative signals from the survey data.
+    \item Collecting more data to improve model robustness.
+\end{enumerate}

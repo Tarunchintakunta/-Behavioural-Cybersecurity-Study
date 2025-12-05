@@ -1,24 +1,29 @@
 \section{Related Work}
-\label{sec:lit_review}
+\label{sec:related_work}
 
-\subsection{The Psychology of Phishing}
-Phishing is fundamentally a psychological attack that exploits heuristics—mental shortcuts used for decision-making. \cite{Kahneman2011} distinguishes between "System 1" (fast, intuitive, emotional) and "System 2" (slow, deliberative, logical) thinking. Phishing attacks are designed to trigger System 1 processing, causing users to bypass the critical analysis of System 2.
+This chapter reviews the state-of-the-art in behavioral cybersecurity, examining the evolution of phishing attacks, the psychological mechanisms of susceptibility, and the role of machine learning in detection. It integrates recent findings from 2020-2024 to provide a contemporary context for the study.
 
-\cite{Vishwanath2011} proposed the "Integrated Information Processing Model of Phishing Susceptibility," which suggests that users with high "habit strength" (habitual email checking) and low "self-efficacy" are more likely to process emails heuristically. When individuals rely on visual cues—such as a familiar logo or a professional layout—rather than analyzing the header information, they are significantly more vulnerable to deception \citep{Dhamija2006}.
+\subsection{The Evolving Threat Landscape}
+Phishing has evolved from generic "spray-and-pray" campaigns to highly sophisticated, targeted operations. \cite{Alkhalil2023} describe a new anatomy of phishing attacks that leverages Artificial Intelligence (AI) to automate social engineering. Attackers now use Generative AI to craft grammatically perfect and contextually relevant emails, bypassing traditional "bad grammar" heuristics that users were trained to spot.
 
-\subsection{Cognitive Biases in Cybersecurity}
-Cognitive biases play a pivotal role in security decision-making.
-\begin{itemize}
-    \item \textbf{Authority Bias}: Individuals tend to comply with requests from perceived figures of authority. Attackers exploit this in Business Email Compromise (BEC) by impersonating CEOs or IT administrators. \cite{Parsons2019} found that social engineering attacks leveraging authority were among the most successful.
-    \item \textbf{Urgency and Scarcity}: The "Urgency Bias" forces users to act quickly to avoid a negative outcome (e.g., "Your account will be locked in 24 hours"). This time pressure suppresses critical thinking and forces a System 1 response.
-    \item \textbf{Optimism Bias}: Users often believe they are less likely to be targeted than others ("It won't happen to me"), leading to lax security behaviors \citep{Sheng2010}.
-\end{itemize}
+The \cite{Verizon2024} Data Breach Investigations Report highlights that the human element remains the primary driver of breaches, involved in 68\% of all incidents. Similarly, \cite{Proofpoint2024} report that 71\% of organizations were infected with ransomware due to a successful phishing attack, underscoring the critical need for human-centric defenses.
 
-\subsection{Stress and Multitasking}
-The modern workplace environment often exacerbates vulnerability. High cognitive load, induced by stress or multitasking, depletes the mental resources required for vigilance. \cite{Jones2020} utilized the Job Demands-Resources (JD-R) model to show a strong correlation between workplace stress and reduced compliance with security policies. When users are multitasking, their ability to detect subtle anomalies—such as a slightly misspelled URL or an unexpected attachment—is severely compromised. This "attention economy" perspective suggests that security is often a secondary task that gets neglected under pressure \citep{Alsharnouby2015}.
+\subsection{Psychological Determinants of Susceptibility}
+Recent research has shifted focus from demographic profiling to understanding the underlying psychological traits that make individuals vulnerable.
 
-\subsection{Limitations of Current Training}
-While security awareness training is a standard compliance requirement, its effectiveness is debated. Traditional training is often infrequent, generic, and passive. \cite{Lastdrager2014} argues that "embedded training," where users are presented with teachable moments immediately after falling for a simulated phish, is far more effective than classroom-style learning. \cite{Caputo2014} supported this, finding that immediate feedback loops significantly improved retention. However, even these interventions rarely account for the user's behavioral profile, treating all employees as equally vulnerable, which is an inefficient allocation of defense resources.
+\subsubsection{Cognitive Biases and Heuristics}
+\cite{Trellix2024} emphasize that attackers exploit "System 1" thinking—fast, intuitive, and emotional processing. Their "Mind of the CISO" report notes that fatigue and burnout significantly degrade an employee's ability to switch to "System 2" analytical thinking when evaluating suspicious emails. This aligns with \cite{Kahneman2011}'s foundational work on cognitive biases.
+
+\subsubsection{Trust and Impulsivity}
+\cite{Alkhalil2023} identify trust and impulsivity as key predictors of susceptibility. Users who score high on agreeableness are more likely to comply with requests from perceived authority figures. Furthermore, \cite{Oest2022} found in a longitudinal study that susceptibility is not static; users fluctuate between vulnerable and resilient states depending on their immediate environment and stress levels.
+
+\subsection{Situational Factors: The Role of Stress}
+The impact of situational stressors has gained attention in the post-pandemic era of hybrid work. \cite{Jones2020} demonstrated a direct link between workplace stress and reduced compliance with security protocols. High cognitive load, exacerbated by multitasking and constant notifications, depletes the mental resources required for vigilance. This study builds on this by quantifying the correlation between perceived stress and the likelihood of clicking a phishing link.
 
 \subsection{Machine Learning in Phishing Detection}
-Most existing research focuses on technical detection—using NLP to analyze email content or analyzing URL structures. However, there is a growing body of work focusing on \textit{user-centric} prediction. Recent studies have begun to use demographic and behavioral data to predict susceptibility, but few have integrated real-time stress and cognitive bias markers into a unified predictive model, which is the gap this study aims to fill.
+While human education is vital, technical defenses remain the first line of defense. \cite{Basit2023} provide a comprehensive survey of AI-enabled detection techniques, noting that while Deep Learning models (e.g., CNNs, RNNs) achieve high accuracy in detecting malicious URLs, they often lack explainability.
+
+\cite{Yousef2023} proposed a hybrid machine learning model that combines content-based features (e.g., keyword analysis) with context-based features (e.g., sender reputation). However, most existing models focus on the \textit{email} itself rather than the \textit{recipient}. There is a gap in the literature for "User Vulnerability Prediction" models that use behavioral data to predict \textit{who} is most likely to fall for an attack, allowing for proactive, targeted intervention.
+
+\subsection{Gap Analysis}
+Despite the wealth of research, a disconnect remains between technical detection systems and behavioral insights. Most studies either focus solely on the psychology (without building predictive models) or solely on the algorithms (ignoring the human user). This research aims to bridge this gap by developing a predictive framework that incorporates psychological, situational, and demographic features to identify high-risk individuals.

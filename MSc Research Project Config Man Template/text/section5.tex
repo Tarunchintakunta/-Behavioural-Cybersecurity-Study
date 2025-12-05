@@ -1,5 +1,69 @@
-\section{Section 5}
-\label{sec:sec5}
+\section{Advanced Configuration and Troubleshooting}
+\label{sec:advanced_config}
 
-Your fifth section. Change the header and label to something appropriate.
+This section provides a deeper dive into the data processing pipeline and statistical analysis components, along with troubleshooting tips for common issues.
 
+\subsection{Data Processing Pipeline}
+The data processing pipeline is critical for ensuring the quality of the data used for model training. The core logic is implemented in \texttt{src/processing/preprocess\_for\_modeling.py}.
+
+\subsubsection{Participant ID Standardization}
+A common issue in combining survey and experiment data is inconsistent participant IDs. The system handles this by robustly standardizing IDs to a \texttt{PXXX} format (e.g., P001, P042).
+
+\begin{verbatim}
+def standardize_participant_id(pid: str) -> str:
+    """
+    Cleans and standardizes a participant ID to the format PXXX.
+    - Removes whitespace.
+    - Extracts digits.
+    - Formats to a 3-digit number.
+    - Prepends 'P'.
+    """
+    if not isinstance(pid, str):
+        return None
+    # Extract all digits from the string
+    digits = re.findall(r'\d+', pid)
+    if not digits:
+        return None
+    # Join digits and convert to integer
+    num = int("".join(digits))
+    # Format to 3 digits with leading zeros and prepend 'P'
+    return f'P{num:03d}'
+\end{verbatim}
+
+\subsubsection{Data Merging and Target Variable Creation}
+The survey data (features) and experiment data (labels) are merged based on the standardized participant ID. The target variable \texttt{vulnerable} is created based on the participant's action in the phishing simulation.
+
+\begin{verbatim}
+# Convert 'participant_action' to binary 'vulnerable' column
+df_merged['vulnerable'] = (
+    df_merged['participant_action'] == 'Clicked Link'
+).astype(int)
+\end{verbatim}
+
+\subsection{Statistical Analysis Configuration}
+The statistical analysis module (\texttt{src/analysis/statistical\_analysis.py}) is designed to answer specific research questions using libraries such as \texttt{scipy} and \texttt{pingouin}.
+
+\subsubsection{Research Questions}
+The analysis covers the following key areas:
+\begin{itemize}
+    \item \textbf{RQ1}: Correlation between cognitive biases and vulnerability (Pearson Correlation).
+    \item \textbf{RQ2}: Impact of stress and multitasking on vulnerability (Pearson Correlation).
+    \item \textbf{RQ3}: Effect of prior cybersecurity training (Independent Samples T-test).
+    \item \textbf{RQ4}: Demographic correlations, specifically job roles (ANOVA).
+\end{itemize}
+
+\subsection{Troubleshooting}
+
+\subsubsection{Common Issues}
+\begin{itemize}
+    \item \textbf{FileNotFoundError}: Ensure that the raw data files are placed correctly in \texttt{data/raw/} and \texttt{data/synthetic/}. The scripts expect specific filenames as defined in the \texttt{main()} functions.
+    \item \textbf{Empty Merged DataFrame}: This usually indicates a mismatch in participant IDs between the survey and experiment data. Check the logs for the unique IDs found in each file and ensure they overlap.
+    \item \textbf{ModuleNotFoundError}: If you encounter missing modules (e.g., \texttt{yaml}, \texttt{pandas}), ensure you have activated the virtual environment and installed the requirements:
+    \begin{verbatim}
+    source venv/bin/activate
+    pip install -r requirements.txt
+    \end{verbatim}
+\end{itemize}
+
+\subsubsection{Logging}
+All scripts are configured to log detailed information to the console. Review the logs for specific error messages or warnings, such as "Participant ID column missing" or "Processing survey data resulted in an empty DataFrame".
